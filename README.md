@@ -1,4 +1,4 @@
-# 💉 IMMUNE - Sistema de Análise de Prontuários Médicos
+#  IMMUNED - Sistema de Análise de Prontuários Médicos
 
 <div align="center">
 
