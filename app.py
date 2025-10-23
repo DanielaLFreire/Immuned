@@ -429,7 +429,7 @@ def main():
             </div>
         """, unsafe_allow_html=True)
     
-    st.header(" Pipeline ETL para Análise de Eficácia Terapêutica")
+    st.header("Pipeline ETL para Análise de Eficácia Terapêutica")
     st.markdown("---")
     
     # Sidebar - Upload e Configurações
@@ -522,14 +522,14 @@ def main():
                 st.metric("Período (dias)", "N/A")
         
         # Mostrar preview dos dados
-        st.markdown("📋 Preview dos Dados")
+        st.markdown("#### 📋 Preview dos Dados")
         st.dataframe(df.head(20), use_container_width=True)
         
         # Informações sobre colunas
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("📐 Informações das Colunas")
+            st.markdown("#### 📐 Informações das Colunas")
             info_df = pd.DataFrame({
                 'Coluna': df.columns,
                 'Tipo': df.dtypes.values,
@@ -540,7 +540,7 @@ def main():
         
         with col2:
             if 'tipo' in df.columns:
-                st.markdown("📊 Distribuição por Tipo")
+                st.markdown("#### 📊 Distribuição por Tipo")
                 tipo_counts = df['tipo'].value_counts()
                 fig = px.bar(
                     x=tipo_counts.index,
@@ -571,7 +571,7 @@ def main():
         st.success("✅ Todas as colunas obrigatórias presentes!")
         
         # Configuração de Marcadores Clínicos
-        st.markdown("📊 1. Marcadores Clínicos")
+        st.markdown("#### 📊 1. Marcadores Clínicos")
         
         default_markers = {
             'vhs': 'VHS - Velocidade de Hemossedimentação',
@@ -612,7 +612,7 @@ def main():
                         selected_markers[marker] = []
         
         # Configuração de Comorbidades
-        st.markdown("🏥 2. Comorbidades")
+        st.markdown("#### 🏥 2. Comorbidades")
         
         default_comorbidities = {
             'has': ['has', 'hipertensão', 'hipertensao'],
@@ -656,7 +656,7 @@ def main():
                 st.success(f"✅ Adicionado: {custom_comorb_name}")
         
         # Configuração de Medicamentos
-        st.markdown("💊 3. Medicamentos")
+        st.markdown("#### 💊 3. Medicamentos")
         
         default_medications = {
             # JAK Inibidores
@@ -729,7 +729,7 @@ def main():
                 st.success(f"✅ Adicionado: {custom_med_name}")
         
         # Configuração de Critérios de Melhora
-        st.markdown("🎯 4. Critérios de Melhora")
+        st.markdown("#### 🎯 4. Critérios de Melhora")
         
         st.markdown("Configure os critérios para definir melhora clínica:")
         
@@ -784,7 +784,7 @@ def main():
             improvement_criteria['cdai'] = lambda v0, v1: v1 <= v0 - cdai_threshold
         
         # Tempo mínimo de tratamento
-        st.markdown("⏱️ 5. Tempo Mínimo de Tratamento")
+        st.markdown("#### ⏱️ 5. Tempo Mínimo de Tratamento")
         min_treatment_days = st.slider(
             "Dias mínimos entre baseline e follow-up:",
             min_value=0,
@@ -964,7 +964,7 @@ def main():
         
         # --- SUBTAB 1: Demografia ---
         with subtab1:
-            st.markdown("👥 Análise Demográfica")
+            st.markdown("#### 👥 Análise Demográfica")
             
             col1, col2 = st.columns(2)
             
@@ -1034,7 +1034,7 @@ def main():
         
         # --- SUBTAB 2: Marcadores ---
         with subtab2:
-            st.markdown("📊 Análise de Marcadores Clínicos")
+            st.markdown("#### 📊 Análise de Marcadores Clínicos")
             
             if 'selected_markers' not in st.session_state:
                 st.info("Nenhum marcador configurado")
@@ -1139,7 +1139,7 @@ def main():
         
         # --- SUBTAB 3: Comorbidades ---
         with subtab3:
-            st.markdown("🏥 Análise de Comorbidades")
+            st.markdown("#### 🏥 Análise de Comorbidades")
             
             if 'selected_comorbidities' not in st.session_state:
                 st.info("Nenhuma comorbidade configurada")
@@ -1194,7 +1194,7 @@ def main():
             # Comorbidades múltiplas
             if 'comorbidade_qualquer' in df_analysis.columns:
                 st.markdown("---")
-                st.markdown("**Análise de Comorbidades Múltiplas**")
+                st.markdown("##### **Análise de Comorbidades Múltiplas**")
                 
                 # CORREÇÃO: Agrupar por paciente primeiro
                 comorb_by_patient = df_analysis.groupby('paciente')[available_comorb].max()
@@ -1215,7 +1215,7 @@ def main():
         
         # --- SUBTAB 4: Medicamentos ---
         with subtab4:
-            st.markdown("💊 Análise de Medicamentos")
+            st.markdown("#### 💊 Análise de Medicamentos")
             
             if 'selected_medications' not in st.session_state:
                 st.info("Nenhum medicamento configurado")
@@ -1299,7 +1299,7 @@ def main():
             
             # Combinações de medicamentos
             st.markdown("---")
-            st.markdown("**Análise de Politerapia**")
+            st.markdown("##### **Análise de Politerapia**")
             
             # CORREÇÃO: Agrupar por paciente primeiro
             politerapia_by_patient = df_analysis.groupby('paciente')[available_meds].max()
@@ -1349,7 +1349,7 @@ def main():
             return
         
         # Métricas gerais
-        st.markdown("📊 Visão Geral da Eficácia")
+        st.markdown("#### 📊 Visão Geral da Eficácia")
         
         col1, col2, col3, col4 = st.columns(4)
         
@@ -1408,7 +1408,7 @@ def main():
         
         # Análise por marcadores
         st.markdown("---")
-        st.markdown("📈 Evolução dos Marcadores Clínicos")
+        st.markdown("#### 📈 Evolução dos Marcadores Clínicos")
         
         if 'selected_markers' in st.session_state:
             markers = list(st.session_state['selected_markers'].keys())
@@ -1495,7 +1495,7 @@ def main():
                         st.plotly_chart(fig, use_container_width=True)
                     
                     # Estatísticas de mudança
-                    st.markdown("**Estatísticas de Mudança:**")
+                    st.markdown("##### **Estatísticas de Mudança:**")
                     
                     col1, col2, col3 = st.columns(3)
                     
@@ -1527,7 +1527,7 @@ def main():
         
         # Análise por subgrupos
         st.markdown("---")
-        st.markdown("👥 Análise por Subgrupos")
+        st.markdown("#### 👥 Análise por Subgrupos")
         
         tab_sex, tab_age, tab_comorb, tab_meds = st.tabs([
             "Por Sexo",
@@ -1670,7 +1670,7 @@ def main():
                 available_meds = [m for m in med_cols if m in df_long.columns]
                 
                 if available_meds:
-                    st.markdown("**Taxa de Resposta por Medicamento:**")
+                    st.markdown("##### **Taxa de Resposta por Medicamento:**")
                     
                     med_response = {}
                     
@@ -1715,13 +1715,13 @@ def main():
     # =============================================================================
     
     with tab5:
-        st.subheader("💾 Exportar Dados Processados")
+        st.markdown("### 💾 Exportar Dados Processados")
         
-        if 'df_processed' not in st.session_state or 'df_longitudinal' not in st.session_state:
+        if 'df_processed'  not in st.session_state or 'df_longitudinal' not in st.session_state:
             st.warning("⚠️ Execute o processamento ETL primeiro (Tab: Configurar ETL)")
             return
         
-        st.markdown("### Escolha o dataset para exportar:")
+        st.markdown("#### Escolha o dataset para exportar:")
         
         col1, col2 = st.columns(2)
         
@@ -1781,7 +1781,7 @@ def main():
         
         # Preview dos dados
         st.markdown("---")
-        st.markdown("Preview dos Dados")
+        st.markdown("#### Preview dos Dados")
         
         preview_option = st.radio(
             "Selecione o dataset para visualizar:",
@@ -1796,7 +1796,7 @@ def main():
         
         # Resumo da configuração usada
         st.markdown("---")
-        st.markdown("⚙️ Configuração Utilizada")
+        st.markdown("#### ⚙️ Configuração Utilizada")
         
         col1, col2, col3 = st.columns(3)
         
