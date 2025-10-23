@@ -279,24 +279,6 @@ improvement_criteria = {
 - Cálculos vetorizados com pandas
 - Gráficos renderizados sob demanda
 
-## 🐛 Correções Importantes
-
-Esta versão inclui **correções críticas** de bugs identificados:
-
-### ✅ Bug Corrigido: Percentuais > 100%
-
-**Problema**: Contagem duplicada de pacientes em múltiplas consultas
-
-**Solução**: Agrupamento por paciente antes de calcular frequências
-
-Detalhes completos em: `EXPLICACAO_BUG_CORRIGIDO.md`
-
-## 📚 Documentação Adicional
-
-- **[GUIA_RAPIDO.md](GUIA_RAPIDO.md)**: Implementação em 3 passos
-- **[EXPLICACAO_BUG_CORRIGIDO.md](EXPLICACAO_BUG_CORRIGIDO.md)**: Detalhes técnicos das correções
-- **[COMPARACAO_VISUAL.md](COMPARACAO_VISUAL.md)**: Diagramas do antes/depois
-
 ## 🤝 Suporte
 
 ### Para Problemas Técnicos
@@ -310,9 +292,9 @@ Detalhes completos em: `EXPLICACAO_BUG_CORRIGIDO.md`
 
 Para questões sobre a plataforma IMMUNE ou parcerias:
 
-- 🌐 Website: [Consulte informações da empresa]
-- 📧 Email: [Contato comercial]
-- 💼 LinkedIn: [Perfil IMMUNE]
+- 🌐 Website: [https://www.linkedin.com/company/immuned/]
+- 📧 Email: [[Contato comercial]("heloisaleao1183@gmail.com" <heloisaleao1183@gmail.com>)]
+- 💼 LinkedIn: [[Perfil IMMUNE](https://www.linkedin.com/company/immuned/)]
 
 ## 🔄 Atualizações
 
