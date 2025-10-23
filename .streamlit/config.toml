@@ -1,0 +1,24 @@
+# Configuração Streamlit - Immuned
+# Coloque este arquivo em: .streamlit/config.toml
+
+[theme]
+# Cores da marca Immuned (azul)
+primaryColor = "#3b82f6"              # Azul principal
+backgroundColor = "#ffffff"            # Branco puro
+secondaryBackgroundColor = "#f8f9fa"  # Cinza muito claro
+textColor = "#374151"                 # Cinza escuro para texto
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
+serverAddress = "localhost"
+
+[server]
+headless = true
+runOnSave = true
+port = 8501
+maxUploadSize = 200
+
+[client]
+showErrorDetails = true
+toolbarMode = "minimal"
