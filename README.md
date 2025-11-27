@@ -439,7 +439,6 @@ A interface utiliza as cores da marca IMMUNE:
 
 - 📖 **GUIA_RAPIDO_v32.md** - Início rápido em 5 minutos
 - 📋 **CHANGELOG_v32.md** - Detalhes técnicos da v3.2
-- 📊 **COMPARACAO_v31_v32.md** - O que mudou entre versões
 - 🗺️ **INDEX.md** - Índice completo da documentação
 
 ### Contato IMMUNE
