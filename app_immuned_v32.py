@@ -901,22 +901,7 @@ def main():
             - `sexo`: Sexo (M/F)
             - `especialidade`: Especialidade médica
             """)
-        
-        with st.expander("🆕 Novidades da versão 3.1"):
-            st.markdown("""
-            **Novas variáveis:**
-            - ✅ **Fator Reumatoide (FR)**: resultado, valor numérico, origem (LAB/TEXTO/CID)
-            - ✅ **Status de medicamentos**: SIM / PRÉVIO / NÃO
-            - ✅ **MTX detalhado**: dose, via (VO/SC/IM), motivo suspensão
-            - ✅ **Biológicos expandidos**: +4 medicamentos, grupo terapêutico
-            - ✅ **Inferência por CID-10** para FR
-            
-            **Funcionalidades completas:**
-            - ✅ Configuração interativa via checkboxes
-            - ✅ Análise Exploratória (4 subtabs)
-            - ✅ Análise de Eficácia por subgrupos
-            - ✅ Critérios de melhora configuráveis
-            """)
+
         return
     
     # Carregar dados
@@ -1016,7 +1001,7 @@ def main():
         st.success("✅ Todas as colunas obrigatórias presentes!")
         
         # --- FATOR REUMATOIDE (NOVO) ---
-        st.markdown("#### 🧬 0. Fator Reumatoide (FR) - NOVO v3.1")
+        st.markdown("#### 🧬 0. Fator Reumatoide (FR)")
         extract_fr = st.checkbox("Extrair Fator Reumatoide", value=True, 
                                   help="Extrai FR resultado, valor e origem (LAB/TEXTO/CID)")
         
