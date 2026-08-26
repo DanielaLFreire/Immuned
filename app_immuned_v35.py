@@ -1276,6 +1276,9 @@ st.markdown("""
 # INTERFACE PRINCIPAL
 # =============================================================================
 
+APP_VERSION = "3.5"
+
+
 def main():
     # Header
     # Header IMMUNE com logo
@@ -1295,9 +1298,9 @@ def main():
             st.markdown("# 💉")
 
     with col_title:
-        st.markdown("""
+        st.markdown(f"""
                 <div class="immune-header">
-                    <h1 class="immune-title">Immuned</h1>
+                    <h1 class="immune-title">Immuned <span style="font-size:1rem; color:#9ca3af; font-weight:400;">v{APP_VERSION}</span></h1>
                     <p class="immune-subtitle">Sistema de Análise de Prontuários Médicos</p>
                     <p class="immune-subtitle" style="font-size: 0.95rem;">
                         Promovendo a saúde com tratamentos inteligentes • Precisão em doenças complexas
@@ -1661,7 +1664,7 @@ def main():
                     # ETAPA 0.5 (v3.5): EXCLUSÃO DE AIJ (nível PACIENTE).
                     if excluir_aij:
                         mask_aij = df_processed['descricao'].apply(registro_menciona_aij)
-                        pacientes_aij = sorted(df_processed.loc[mask_aij, 'paciente'].unique())
+                        pacientes_aij = sorted(df_processed.loc[mask_aij, 'paciente'].unique().tolist())
                         if pacientes_aij:
                             n_antes = df_processed['paciente'].nunique()
                             df_processed = df_processed[
