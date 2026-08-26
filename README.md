@@ -12,10 +12,10 @@
 
 ---
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-Proprietário-green.svg)]()
-[![Version](https://img.shields.io/badge/Version-3.2-brightgreen.svg)]()
+[![Version](https://img.shields.io/badge/Version-3.5-brightgreen.svg)]()
 
 </div>
 
@@ -32,7 +32,32 @@ A **IMMUNE** é uma empresa de tecnologia em saúde focada em:
 
 ---
 
-## 🆕 Novidades da Versão 3.2
+## 🆕 Novidades da Versão 3.5
+
+Versão focada em **correção de extração** (revisão) e **limpeza de coorte**.
+Detalhes em [`CHANGELOG_v35.md`](CHANGELOG_v35.md).
+
+- 🔴 **Negação tratada:** *"não faz uso"*, *"nega uso"*, *"sem uso"*, *"não está
+  em uso"* passam a ser classificados como **não-ativo**. Antes contavam como uso
+  atual (`SIM`) e inflavam sistematicamente as taxas. *(Reprocessar a base muda
+  os números para menos — isso é a correção funcionando.)*
+- 🟠 **Deduplicação por paciente:** a chave passou a ser
+  `paciente + tipo + data_hora + descricao`, evitando apagar registros reais de
+  pacientes diferentes que compartilham frases padronizadas.
+- 🟠 **Múltiplos biológicos:** 2+ biológicos ativos no mesmo registro são
+  marcados como `MÚLTIPLO` (com a lista completa preservada) em vez de fixar
+  silenciosamente o primeiro da configuração.
+- ✨ **Exclusão de AIJ:** pacientes com Artrite Idiopática Juvenil (por texto ou
+  CID-10 **M08**) são removidos inteiros da coorte (checkbox *Filtros de coorte*,
+  ligado por padrão).
+
+Herança das versões anteriores: categoria `INDETERMINADO`, base longitudinal com
+status em dois momentos (`_t0`/`_t1`), aliases com fronteira de palavra e status
+por proximidade (v3.4); Análise de Trocas de Medicamentos (v3.2, abaixo).
+
+---
+
+## 🆕 Novidades da Versão 3.2 (histórico)
 
 ### 🔄 **Nova Funcionalidade: Análise de Trocas de Medicamentos**
 
@@ -125,7 +150,7 @@ Esta aplicação é um **Pipeline ETL (Extract, Transform, Load)** especializado
 ## 🚀 Instalação Rápida
 
 ### Pré-requisitos
-- Python 3.8 ou superior
+- Python 3.9 ou superior (necessário para pandas ≥ 2.2)
 - pip (gerenciador de pacotes Python)
 
 ### Instalação
@@ -135,28 +160,43 @@ Esta aplicação é um **Pipeline ETL (Extract, Transform, Load)** especializado
 pip install -r requirements.txt
 
 # Ou instalar manualmente:
-pip install streamlit pandas plotly numpy openpyxl pillow
+pip install "pandas>=2.2.0,<3.0.0" streamlit plotly openpyxl
 
-# 2. Garantir que LOGO.jpeg está no mesmo diretório
+# 2. Garantir que LOGO.jpeg está no mesmo diretório (opcional; há fallback)
 
 # 3. Executar aplicação
-streamlit run app_immuned_v32_com_analise_trocas.py
+streamlit run app_immuned_v35.py
+```
+
+> **pandas:** o `requirements.txt` fixa `pandas>=2.2.0,<3.0.0`. O teto evita o
+> pandas 3.x (strings via PyArrow por padrão quebram reduções numéricas no
+> Streamlit Cloud); o piso garante compatibilidade com numpy 2.x.
+
+### Testes
+
+```bash
+python3 teste_v35.py    # deve terminar em "TODOS OS TESTES PASSARAM"
 ```
 
 ### Estrutura de Arquivos
 
 ```
-📁 seu_projeto/
-├── 📄 app_immuned_v32_com_analise_trocas.py   # Aplicação principal (v3.2)
-├── 📄 requirements.txt                         # Dependências
-├── 🖼️ LOGO.jpeg                               # Logo da IMMUNE
-├── 📄 README.md                                # Este arquivo
-├── 📁 docs/                                    # Documentação
-│   ├── GUIA_RAPIDO_v32.md                     # Guia de início rápido
-│   ├── CHANGELOG_v32.md                       # Mudanças da versão
-│   ├── COMPARACAO_v31_v32.md                  # Comparação de versões
-│   └── INDEX.md                               # Índice geral
-└── 📁 examples/                                # Exemplos de dados
+📁 repositório/
+├── 📄 app_immuned_v35.py        # Aplicação principal (v3.5) — usar este
+├── 📄 app_immuned_v34.py        # Versão anterior
+├── 📄 app_immuned_v33.py
+├── 📄 app_immuned_v32.py
+├── 📄 patch_v34_to_v35.py       # Gera a v3.5 a partir da v3.4 (reexecutável)
+├── 📄 teste_v35.py              # Suíte de testes (45 asserções)
+├── 📄 teste_v34.py
+├── 📄 extraction_module.py
+├── 📄 requirements.txt          # Dependências (pandas pinado)
+├── 🖼️ LOGO.jpeg                 # Logo da IMMUNE
+├── 📄 README.md                 # Este arquivo
+├── 📄 INDEX.md                  # Índice da documentação
+├── 📄 CHANGELOG_v35.md          # Mudanças da v3.5
+├── 📄 CHANGELOG_v32.md
+└── 📄 GUIA_RAPIDO_v32.md
 ```
 
 ---
@@ -453,20 +493,34 @@ Para questões sobre a plataforma IMMUNE ou parcerias:
 
 ## 🔄 Atualizações
 
-### Versão 3.2 - Atual (Novembro 2025)
+### Versão 3.5 - Atual (Agosto 2026)
 
-**Novidades:**
+**Correções (revisão):**
+- ✅ Negação tratada ("não/nega/sem uso" → não-ativo)
+- ✅ Deduplicação por paciente (não apaga registros reais)
+- ✅ Múltiplos biológicos no mesmo registro → `MÚLTIPLO`
+
+**Novidade:**
+- ✅ Exclusão de coorte AIJ (texto + CID-10 M08)
+
+Ver [`CHANGELOG_v35.md`](CHANGELOG_v35.md).
+
+### Versão 3.4 (2026)
+
+- ✅ Aliases com fronteira de palavra (fim de falsos positivos como `ada` em "indicada")
+- ✅ Status por proximidade + categoria `INDETERMINADO`
+- ✅ Base longitudinal com status em dois momentos (`_t0`/`_t1`)
+- ✅ Ordenação cronológica antes das agregações
+
+### Versão 3.3
+
+- ✅ Ajustes de extração e interface (base para a v3.4)
+
+### Versão 3.2 (Novembro 2025)
+
 - ✅ **Análise de Trocas de Medicamentos** (6 tipos de análise)
-- ✅ Matriz de transição DE → PARA
-- ✅ Taxa de abandono por medicamento
-- ✅ Motivos de suspensão detalhados
-- ✅ Sequências de tratamento comuns
-- ✅ Comparação de eficácia pós-troca
-
-**Melhorias:**
-- ✅ Performance otimizada
-- ✅ Interface aprimorada
-- ✅ Documentação expandida
+- ✅ Matriz de transição DE → PARA, taxa de abandono, motivos de suspensão
+- ✅ Sequências de tratamento e eficácia pós-troca
 
 ### Versão 3.1 (Outubro 2025)
 
@@ -558,29 +612,20 @@ Para questões sobre a plataforma IMMUNE ou parcerias:
 
 ### Documentação Completa
 
-Todos os arquivos estão disponíveis na pasta `docs/`:
+Todos os arquivos estão na **raiz do repositório**:
 
-1. **GUIA_RAPIDO_v32.md**
-   - Início rápido em 5 minutos
-   - 4 casos de uso práticos
-   - Solução de problemas comuns
-   - Customizações rápidas
+1. **[CHANGELOG_v35.md](CHANGELOG_v35.md)**
+   - Correções da v3.5 (negação, dedup, MÚLTIPLO, AIJ)
+   - Mudanças técnicas e checklist de validação
 
-2. **CHANGELOG_v32.md**
-   - Mudanças detalhadas da v3.2
-   - 6 seções de análise explicadas
-   - Troubleshooting técnico
-   - Próximas melhorias
+2. **[INDEX.md](INDEX.md)**
+   - Índice da documentação e histórico de versões
 
-3. **COMPARACAO_v31_v32.md**
-   - Tabela comparativa visual
-   - Antes/depois detalhado
-   - Recomendação de upgrade
+3. **[GUIA_RAPIDO_v32.md](GUIA_RAPIDO_v32.md)**
+   - Início rápido e casos de uso (base da v3.2, ainda útil)
 
-4. **INDEX.md**
-   - Índice de toda documentação
-   - Checklists completos
-   - FAQ e links rápidos
+4. **[CHANGELOG_v32.md](CHANGELOG_v32.md)**
+   - Histórico: Análise de Trocas de Medicamentos (v3.2)
 
 ### Vídeos Tutoriais (Em Breve)
 
@@ -596,7 +641,7 @@ Todos os arquivos estão disponíveis na pasta `docs/`:
 ### Instalação e Configuração
 
 **P: Quais são os requisitos mínimos?**
-R: Python 3.8+, 4GB RAM, 100MB espaço em disco
+R: Python 3.9+ (para pandas ≥ 2.2), 4GB RAM, 100MB espaço em disco
 
 **P: Funciona no Windows/Mac/Linux?**
 R: Sim, é multiplataforma (testado em Windows 10/11, macOS 12+, Ubuntu 20.04+)
@@ -668,17 +713,17 @@ Este software é proprietário e de uso restrito. Entre em contato com IMMUNE pa
 
 ---
 
-Sistema de Análise de Prontuários **v3.2**
+Sistema de Análise de Prontuários **v3.5**
 
 Desenvolvido com ❤️ pela equipe IMMUNE
 
 ---
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
-[![Version](https://img.shields.io/badge/Version-3.2-brightgreen.svg)]()
+[![Version](https://img.shields.io/badge/Version-3.5-brightgreen.svg)]()
 [![Docs](https://img.shields.io/badge/Docs-Complete-blue.svg)]()
 
-**[Documentação](docs/)** | **[Changelog](docs/CHANGELOG_v32.md)** | **[Guia Rápido](docs/GUIA_RAPIDO_v32.md)**
+**[Índice](INDEX.md)** | **[Changelog v3.5](CHANGELOG_v35.md)** | **[Guia Rápido](GUIA_RAPIDO_v32.md)**
 
 </div>
