@@ -3070,9 +3070,9 @@ def main():
     
     # Footer
     st.markdown("---")
-    st.markdown("""
+    st.markdown(f"""
         <div class="immune-footer">
-            <p><strong>Immuned</strong> v3.4 | Sistema de Análise de Prontuários</p>
+            <p><strong>Immuned</strong> v{APP_VERSION} | Sistema de Análise de Prontuários</p>
             <p style="font-size: 0.85rem; margin-top: 0.5rem;">
                 Promovendo a saúde com tratamentos inteligentes • Precisão em doenças complexas
             </p>
